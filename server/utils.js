@@ -21,6 +21,7 @@ async function getEmbedding(text) {
 
         return response.data; // this is a vector (array of floats)
     } catch (err) {
+        console.log('Error embedding:', err);
         console.error('Embedding error:', err.response?.data || err.message);
         return null;
     }
