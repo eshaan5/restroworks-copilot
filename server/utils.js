@@ -6,6 +6,7 @@ const HF_API_TOKEN = process.env.HF_API_KEY;
 
 async function getEmbedding(text) {
     try {
+        console.log('text', text);
         const response = await axios.post(
             'https://api-inference.huggingface.co/pipeline/feature-extraction/intfloat/e5-large',
             {
@@ -21,7 +22,7 @@ async function getEmbedding(text) {
 
         return response.data; // this is a vector (array of floats)
     } catch (err) {
-        console.error('Embedding error:', err.response?.data || err.message);
+        console.error('Embedding error:', err);
         return null;
     }
 }
