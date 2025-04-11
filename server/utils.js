@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { config } from 'dotenv';
 import { CohereClient } from 'cohere-ai';
+config();
 
-const cohere = new CohereClient({ token: 'ofTsSccBbBDoYAYXAlIeJw2o1B7fUOu0vba5ObLt' });
+const cohere = new CohereClient({ token: process.env.COHERE_TOKEN });
 
 config();
 const HF_API_TOKEN = process.env.HF_API_KEY;
