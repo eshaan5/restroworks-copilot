@@ -6,7 +6,7 @@ const pinecone = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY,
 });
 
-const index = pinecone.Index('table-2');
+const index = pinecone.Index('final-table');
 
 const uploadToPinecone = async (data, embedding, key) => {
     await index.upsert([

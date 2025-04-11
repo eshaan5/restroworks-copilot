@@ -7,7 +7,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import logo from "./assets/posist-glificon-logo.png";
+import logo from "./assets/Black-Corbi-restrobot.png";
 import "./FullPageChatbot.css"; // Import your CSS file for styling
 
 // Import the existing chatbot logic but don't render the floating component

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import logo from "./assets/posist-glificon-logo.png";
+import logo from "./assets/Black-Corbi-restrobot.png";
 import { Mic } from "lucide-react";
 
 function App() {
