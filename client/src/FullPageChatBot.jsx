@@ -91,6 +91,36 @@ function FullPageChatbot() {
     }
   };
 
+  const sendQuestionWrapper = async (questionText) => {
+    if (!questionText) return;
+
+    const newMessages = [...messages, { q: questionText, a: "..." }];
+    setMessages(newMessages);
+    setQuestion("");
+
+    const recentHistory = newMessages
+      .slice(-6, -1)
+      .map(({ q, a }) => [
+        { role: "user", content: q },
+        { role: "chatbot", content: a },
+      ])
+      .flat();
+
+    const res = await fetch("http://localhost:3000/api/chatbot/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: questionText, recentHistory }),
+    });
+
+    const data = await res.json();
+
+    setMessages((prev) => {
+      const updated = [...prev];
+      updated[updated.length - 1] = { q: questionText, a: data.answer };
+      return updated;
+    });
+  };
+
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
       alert("Speech recognition not supported in this browser.");
@@ -106,6 +136,10 @@ function FullPageChatbot() {
 
     recognition.onstart = () => {
       setIsListening(true);
+
+      // Optional: play mic sound
+      const audio = new Audio("/mic-on.mp3");
+      audio.play().catch(() => {});
     };
 
     recognition.onresult = (event) => {
@@ -123,12 +157,8 @@ function FullPageChatbot() {
 
       const finalTranscript = transcriptRef.current.trim();
       if (finalTranscript) {
-        setQuestion((prev) => {
-          const combined = prev
-            ? prev + " " + finalTranscript
-            : finalTranscript;
-          return combined; // Set the input field, but don't send yet
-        });
+        sendQuestionWrapper(finalTranscript);
+        setQuestion(""); // optional UI sync
       }
 
       transcriptRef.current = "";
@@ -184,6 +214,7 @@ function FullPageChatbot() {
   };
 
   const formatTime = (date) => {
+    if (!date) return "";
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
@@ -311,7 +342,7 @@ function FullPageChatbot() {
                 />
 
                 <div className="input-actions">
-                <button
+                  <button
                     onClick={sendQuestion}
                     disabled={!question.trim()}
                     className="action-button send-button"
