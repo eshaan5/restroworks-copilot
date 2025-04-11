@@ -414,7 +414,7 @@
 }
 
 .action-button.mic-button.listening {
-  color: #ef4444;
+  color: #bd0202;
   animation: pulse 1.2s infinite;
 }
 
@@ -515,6 +515,6 @@
 
 .action-button.mic-button.listening {
   background-color: #fef2f2;
-  color: #ef4444;
+  color: #bd0202;
   animation: pulse 1.2s infinite;
 }
